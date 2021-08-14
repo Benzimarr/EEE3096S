@@ -1,4 +1,4 @@
-# EEE3096S Tut 1
-Repository for Tut 1
+# EEE3096S
+Repository for Work Related to EEE3096S
 
 Group members are Andrew Abrahams (ABRAND008) and Benjamin Measures (MSRBEN001)
