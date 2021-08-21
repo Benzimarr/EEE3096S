@@ -98,13 +98,13 @@ int main(void){
 	for (;;){
 		//Fetch the time from the RTC
 		//Write your logic here
-		hours = wiringPiI2CReadReg8(RTC,HOUR_REGISTER):
+		hours = wiringPiI2CReadReg8(RTC,HOUR_REGISTER);
 		hours = hexCompensation(hours);
 		hours = hFormat(hours);
 		mins = wiringPiI2CReadReg8(RTC,MIN_REGISTER);
 		mins = hexCompensation(mins);
 		secs = wiringPiI2CReadReg8(RTC,SEC_REGISTER);
-		secs = hecCompensation(secs);
+		secs = hexCompensation(secs);
 
 		//Toggle Seconds LED
 		//Write your logic here
@@ -211,7 +211,7 @@ void hourInc(void){
 		HH = hexCompensation(HH);
 		HH = HH + 1;
 		HH = hFormat(HH);
-		HH - decCompensation(HH);
+		HH = decCompensation(HH);
 		wiringPiI2CWriteReg8(RTC, HOUR_REGISTER, HH);
 	}
 	lastInterruptTime = interruptTime;

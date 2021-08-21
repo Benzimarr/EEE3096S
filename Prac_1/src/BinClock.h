@@ -24,7 +24,7 @@ const char HOUR_REGISTER = 0x02;
 const char TIMEZONE = 2; // +02H00 (RSA)
 
 // define pins
-const int LED = 2//CHoose your LED Pin here
+const int LED = 2;//CHoose your LED Pin here
 const int SECS = 1;
 const int BTNS[] = {27,29}; // B0, B1
 
