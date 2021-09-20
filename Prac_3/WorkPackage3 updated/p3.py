@@ -6,13 +6,14 @@ import os
 
 # some global variables that need to change as we run the program
 end_of_game = None  # set if the user wins or ends the game
+counter = 0
 
 # DEFINE THE PINS USED HERE
 LED_value = [11, 13, 15]
 LED_accuracy = 32
 btn_submit = 16
 btn_increase = 18
-buzzer = None
+buzzer = 33
 eeprom = ES2EEPROMUtils.ES2EEPROM()
 
 
@@ -63,10 +64,35 @@ def display_scores(count, raw_data):
 
 # Setup Pins
 def setup():
+    global PWM_1, PWM_2
     # Setup board mode
+    GPIO.setmode(GPIO.BOARD)
     # Setup regular GPIO
+    GPIO.setup(LED_value[0],GPIO.OUT)
+    GPIO.setup(LED_value[1],GPIO.OUT)
+    GPIO.setup(LED_value[2],GPIO.OUT)
+
+    GPIO.output(LED_value[0],0)
+    GPIO.output(LED_value[1],0)
+    GPIO.output(LED_value[2],0)
+
+    GPIO.setup(3,GPIO.OUT)
+    GPIO.setup(5,GPIO.OUT)
     # Setup PWM channels
+    GPIO.setup(LED_accuracy,GPIO.OUT)
+    PWM_1 = GPIO.PWM(LED_accuracy,1000)
+    PWM_1.start(0)
+
+    GPIO.setup(buzzer,GPIO.OUT)
+    PWM_2 = GPIO.PWM(buzzer,1)
+    PWM_2.start(50)
+
     # Setup debouncing and callbacks
+    GPIO.setup(btn_submit,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(btn_submit,GPIO.FALLING,btn_guess_pressed,bouncetime=5000)
+    
+    GPIO.setup(btn_increase,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(btn_increase,GPIO.FALLING,btn_increase_pressed,bouncetime=200)
     pass
 
 
@@ -102,6 +128,44 @@ def btn_increase_pressed(channel):
     # Increase the value shown on the LEDs
     # You can choose to have a global variable store the user's current guess, 
     # or just pull the value off the LEDs when a user makes a guess
+    global counter
+    counter += 1
+    if counter == 0:
+        GPIO.output(LED_value[0],0)
+        GPIO.output(LED_value[1],0)
+        GPIO.output(LED_value[2],0)
+    elif counter == 1:
+        GPIO.output(LED_value[0],1)
+        GPIO.output(LED_value[1],0)
+        GPIO.output(LED_value[2],0)
+    elif counter == 2:
+        GPIO.output(LED_value[0],0)
+        GPIO.output(LED_value[1],1)
+        GPIO.output(LED_value[2],0)
+    elif counter == 3:
+        GPIO.output(LED_value[0],1)
+        GPIO.output(LED_value[1],1)
+        GPIO.output(LED_value[2],0)
+    elif counter == 4:
+        GPIO.output(LED_value[0],0)
+        GPIO.output(LED_value[1],0)
+        GPIO.output(LED_value[2],1)
+    elif counter == 5:
+        GPIO.output(LED_value[0],1)
+        GPIO.output(LED_value[1],0)
+        GPIO.output(LED_value[2],1)
+    elif counter == 6:
+        GPIO.output(LED_value[0],0)
+        GPIO.output(LED_value[1],1)
+        GPIO.output(LED_value[2],1)
+    elif counter == 7:
+        GPIO.output(LED_value[0],1)
+        GPIO.output(LED_value[1],1)
+        GPIO.output(LED_value[2],1)
+    else:
+        GPIO.output(LED_value[0],0)
+        GPIO.output(LED_value[1],0)
+        GPIO.output(LED_value[2],0)
     pass
 
 
