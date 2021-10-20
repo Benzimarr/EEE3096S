@@ -33,7 +33,7 @@ module tb_reg_mem;
         end
         wen =0;
         #1;
-        //Read 10-17 from addresses 0-7 
+        //Read 0-31 to addresses 0-31 
       for(int i=0;i<32;i=i+1) 
         begin
             data_in = i; 
